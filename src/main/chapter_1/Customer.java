@@ -21,29 +21,30 @@ public class Customer {
 	}
 
 	/**
-	 * 生成订单的方法。处理了3个模块：积分计算；总费用计算；输出订单信息；
-	 * 		存在的问题：
-	 * 		1.单个模块的新增功能，都需要复制所有代码重新编写
-	 * 		2.因为复制整个代码块，在修改共有逻辑时，反而增加要修改多处
+	 * 生成订单信息 模块。
+	 * 		经过多次重构之后，3个模块已经被分开。
+	 * 		1.每个方法逻辑减少、代码量减少，易于阅读、维护
+	 * 		2.逻辑分开后，易于重用。业务逻辑变动，只用在一处修改
 	 * @return
 	 * 			输出订单信息
 	 */
 	public String statement() {
-		Enumeration<Rental> rentals = _rentals.elements();
 		String result = "Rental Record for " + getName() + "\n";
+		Enumeration<Rental> rentals = _rentals.elements();
 		while(rentals.hasMoreElements()) {
 			Rental each = (Rental) rentals.nextElement();
-			
-			result += "\t" + each.getMovie().getTitle()+"\t"+
-					String.valueOf(each.getCharge())+"\n";
+			result += "\t" + each.getMovie().getTitle() + "\t"+ String.valueOf( each.getCharge() ) + "\n";
 		}
 		
-		result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
-		result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) +
-				" frequent renter points";
+		result += "Amount owed is " + String.valueOf( getTotalCharge() ) + "\n";
+		result += "You earned " + String.valueOf( getTotalFrequentRenterPoints() ) + " frequent renter points";
 		return result;
 	}
 	
+	/**
+	 * 总费用计算 模块
+	 * @return
+	 */
 	private double getTotalCharge() {
 		double result = 0;
 		Enumeration<Rental> rentals = _rentals.elements();
@@ -54,6 +55,10 @@ public class Customer {
 		return result;
 	}
 	
+	/**
+	 * 总积分计算 模块
+	 * @return
+	 */
 	private int getTotalFrequentRenterPoints() {
 		int result = 0;
 		Enumeration<Rental> rentals = _rentals.elements();
