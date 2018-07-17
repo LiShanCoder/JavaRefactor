@@ -3,10 +3,13 @@ package main.chapter_1;
 public class Test {
 
 	public static void main(String[] args) {
-//		String result = new Customer("小明").statement();
-//		System.out.println(result);
 		
 		test1();
+		/* 这次的重构到底有什么意义？
+		 * 		1.对于少量代码的程序来说，任何修改可能都不合算。
+		 * 		2.无论代码的多少，易读性的提升，都是有的
+		 * 		3.对于应对后续相同模块的修改，有了质的提升（修改影片分类结构，改变费用计算规则，改变常客积分计算规则）
+		 */
 	}
 
 	private static void test1() {
