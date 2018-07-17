@@ -36,7 +36,7 @@ public class Customer {
 		while(rentals.hasMoreElements()) {
 			Rental each = (Rental) rentals.nextElement();
 			
-			double thisAmount = amountFor(each);
+			double thisAmount = each.getCharge();
 			
 			frequentRenterPoints++;
 			
@@ -54,14 +54,5 @@ public class Customer {
 				" frequent renter points";
 		return result;
 	}
-
-	/* 这个方法并没有使用来自Customer.class的信息。
-	 * 绝大多数情况下，函数应该放在它所使用的数据的所属对象内。（摘抄自《重构...》）
-	 * 所以应该移到Rental.class中
-	 */
-	private double amountFor(Rental aRental) {
-		return aRental.getCharge();
-	}
-
 
 }
