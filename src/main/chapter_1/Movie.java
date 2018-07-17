@@ -41,6 +41,22 @@ public class Movie {
 	 * 重构难点：分离 变化的、不变化的
 	 */
 	double getCharge(int daysRented) {
+		return _price.getCharge(daysRented);
+	}
+	
+	int getFrequentRenterPoints(int daysRented) {
+		if((getPriceCode()==Movie.NEW_RELEASE) && daysRented>1)
+			return 2;
+		else
+			return 1;
+	}
+	
+}
+
+abstract class Price{
+	abstract int getPriceCode();
+
+	double getCharge(int daysRented) {
 		double result = 0;
 		switch(getPriceCode()) {
 		case Movie.REGULAR:
@@ -59,18 +75,6 @@ public class Movie {
 		}
 		return result;
 	}
-	
-	int getFrequentRenterPoints(int daysRented) {
-		if((getPriceCode()==Movie.NEW_RELEASE) && daysRented>1)
-			return 2;
-		else
-			return 1;
-	}
-	
-}
-
-abstract class Price{
-	abstract int getPriceCode();
 }
 
 class ChildrensPrice extends Price{
