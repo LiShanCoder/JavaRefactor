@@ -10,7 +10,7 @@ public class Movie {
 	
 	public Movie(String _title, int _priceCode) {
 		this._title = _title;
-		setPriceCode(_priceCode);
+		setPriceCode(_priceCode);			//Self Encapsulate Field，确保任何时候，都通过取值函数、设值函数来访问类型代码
 	}
 
 	public String getTitle() {
