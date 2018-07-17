@@ -22,9 +22,6 @@ public class Customer {
 
 	/**
 	 * 生成订单信息 模块。
-	 * 		经过多次重构之后，3个模块已经被分开。
-	 * 		1.每个方法逻辑减少、代码量减少，易于阅读、维护
-	 * 		2.逻辑分开后，易于重用。业务逻辑变动，只用在一处修改
 	 * @return
 	 * 			输出订单信息
 	 */
@@ -35,7 +32,6 @@ public class Customer {
 			Rental each = (Rental) rentals.nextElement();
 			result += "\t" + each.getMovie().getTitle() + "\t"+ String.valueOf( each.getCharge() ) + "\n";
 		}
-		
 		result += "Amount owed is " + String.valueOf( getTotalCharge() ) + "\n";
 		result += "You earned " + String.valueOf( getTotalFrequentRenterPoints() ) + " frequent renter points";
 		return result;

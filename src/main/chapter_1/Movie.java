@@ -26,9 +26,8 @@ public class Movie {
 		this._priceCode = _priceCode;
 	}
 
-	/* 参数的选择上：选择[租期长度]作为参数，而不使用[影片类型]作为参数？
-	 * 		[租期长度]与Movie.class变动关系不大，置于Movie.class外部，以参数形式传入
-	 * 		[影片类型]与Movie.class关系密切，应置于Movie.class内部，与[影片类型]相关的操作都应该放在Movie.class中
+	/*
+	 * 重构难点：分离 变化的、不变化的
 	 */
 	double getCharge(int daysRented) {
 		double result = 0;
