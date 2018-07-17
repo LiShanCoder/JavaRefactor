@@ -1,16 +1,16 @@
 package main.chapter_1;
 
 public class Movie {
-	public static final int CHILDRENS = 2;
-	public static final int NEW_RELEASE = 1;
 	public static final int REGULAR = 0;
+	public static final int NEW_RELEASE = 1;
+	public static final int CHILDRENS = 2;
 
 	private String _title;
 	private Price _price;
 	
 	public Movie(String _title, int _priceCode) {
 		this._title = _title;
-		setPriceCode(_priceCode);			//Self Encapsulate Field，确保任何时候，都通过取值函数、设值函数来访问类型代码
+		setPriceCode(_priceCode);
 	}
 
 	public String getTitle() {
@@ -21,25 +21,24 @@ public class Movie {
 		return _price.getPriceCode();
 	}
 
+	//初始化Movie.class时，根据对应priceCode创建Price.class子类
 	public void setPriceCode(int _priceCode) {
 		switch(_priceCode) {
 		case REGULAR:
 			_price = new RegularPrice();
 			break;
-		case CHILDRENS:
-			_price = new ChildrensPrice();
-			break;
 		case NEW_RELEASE:
 			_price = new NewReleasePrice();
+			break;
+		case CHILDRENS:
+			_price = new ChildrensPrice();
 			break;
 		default:
 			throw new IllegalArgumentException("Incorrect Price Code");
 		}
 	}
 
-	/*
-	 * 重构难点：分离 变化的、不变化的
-	 */
+	//创建时已分类创建好Price.class子类，[运行时多态]直接调用对应的getCharge()方法
 	double getCharge(int daysRented) {
 		return _price.getCharge(daysRented);
 	}
@@ -55,45 +54,38 @@ public class Movie {
 
 abstract class Price{
 	abstract int getPriceCode();
+	abstract double getCharge(int daysRented);
+}
 
+class RegularPrice extends Price{
+	int getPriceCode() {
+		return Movie.REGULAR;
+	}
 	double getCharge(int daysRented) {
-		double result = 0;
-		switch(getPriceCode()) {
-		case Movie.REGULAR:
-			result += 2;
-			if(daysRented>2)
-				result += (daysRented-2) * 1.5;
-			break;
-		case Movie.NEW_RELEASE:
-			result += daysRented * 3;
-			break;
-		case Movie.CHILDRENS:
-			result += 1.5;
-			if(daysRented>3)
-				result += (daysRented-3) * 1.5;
-			break;
-		}
+		double result = 2;
+		if(daysRented>2)
+			result += (daysRented-2) * 1.5;
 		return result;
 	}
 }
 
-class ChildrensPrice extends Price{
-	@Override
-	int getPriceCode() {
-		return Movie.CHILDRENS;
-	}
-}
-
 class NewReleasePrice extends Price{
-	@Override
 	int getPriceCode() {
 		return Movie.NEW_RELEASE;
 	}
+	double getCharge(int daysRented) {
+		return daysRented * 3;
+	}
 }
 
-class RegularPrice extends Price{
-	@Override
+class ChildrensPrice extends Price{
 	int getPriceCode() {
-		return Movie.REGULAR;
+		return Movie.CHILDRENS;
+	}
+	double getCharge(int daysRented) {
+		double result = 1.5;
+		if(daysRented>3)
+			result += (daysRented-3) * 1.5;
+		return result;
 	}
 }
